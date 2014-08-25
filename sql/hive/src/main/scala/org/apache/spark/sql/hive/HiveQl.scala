@@ -257,7 +257,7 @@ private[hive] object HiveQl {
       case e: NotImplementedError => sys.error(
         s"""
           |Unsupported language features in query: $sql
-          |${dumpTree(getAst(sql))}
+          |${dumpTree(getAst(hive, sql))}
         """.stripMargin)
     }
   }

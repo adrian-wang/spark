@@ -5,7 +5,7 @@ import org.apache.spark.SparkContext
  */
 object TestPanthera {
   def main(args: Array[String]) {
-    val spark = new SparkContext("local", "Panthera", System.getenv("Spark_HOME"), SparkContext.jarOfClass(this.getClass))
+    val spark = new SparkContext("local", "TestSQLPantheraContext", new SparkConf())
     val lhive = (new LocalHiveContext(spark))
     lhive.sql(s"""drop database IF EXISTS hive CASCADE""")
     lhive.sql(s"""create database hive""")
