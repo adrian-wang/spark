@@ -1,5 +1,5 @@
 package org.apache.spark.sql.hive
-import org.apache.spark.SparkContext
+import org.apache.spark.{SparkConf, SparkContext}
 /**
  * Created by animal on 4/4/14.
  */
