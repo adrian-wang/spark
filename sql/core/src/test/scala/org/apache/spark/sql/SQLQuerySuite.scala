@@ -300,8 +300,22 @@ class SQLQuerySuite extends QueryTest with BeforeAndAfterAll {
 
   test("left semi greater than predicate and equal operator") {
     checkAnswer(
-      sql("SELECT * FROM testData2 x LEFT SEMI JOIN testData2 y ON x.b = y.b and x.a >= y.a + 2"),
-      Seq(Row(3,1), Row(3,2))
+      sql("""
+            |SELECT * FROM testData2 x
+            |LEFT SEMI JOIN testData4 y
+            |ON x.b = y.b
+            |AND x.a >= y.a + 2""".stripMargin),
+      Seq(Row(2,1), Row(2,2), Row(3,1), Row(3,2))
+    )
+
+    checkAnswer(
+      sql("""
+            |SELECT * FROM testData2 x
+            |LEFT SEMI JOIN testData4 y
+            |ON x.b = y.b
+            |AND x.a >= y.a + 2
+            |AND x.a >= y.a + 1""".stripMargin),
+      Seq(Row(2,1), Row(2,2), Row(3,1), Row(3,2))
     )
 
     checkAnswer(
