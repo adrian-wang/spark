@@ -63,6 +63,17 @@ class SQLQuerySuite extends QueryTest with SQLTestUtils with TestHiveSingleton {
   import hiveContext._
   import spark.implicits._
 
+  test("script") {
+    val df = Seq(("x1", "y1", "z1"), ("x2", "y2", "z2")).toDF("c1", "c2", "c3")
+    df.createOrReplaceTempView("table1")
+    val query = sql(
+      """
+        |SELECT col2 from (from(select c1, c2, c3 from table1) tempt0
+        |REDUCE c1, c2, c3 USING 'python src/test/resources/test_script.py' AS
+        |(col1 string, col2 string)) script_test_table""".stripMargin)
+    checkAnswer(query, Row("y1_z1") :: Row("y2_z2") :: Nil)
+  }
+
   test("UDTF") {
     withUserDefinedFunction("udtf_count2" -> true) {
       sql(s"ADD JAR ${hiveContext.getHiveFile("TestUDTF.jar").getCanonicalPath()}")
