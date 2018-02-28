@@ -49,7 +49,7 @@ class FPGAJsonParser(
     jp2
   }
 
-  val convertedRow = new UnsafeRow()
+  val convertedRow = new UnsafeRow(schema.length)
 
   private def jniConverter(buf: Array[Byte], offset: Int, length: Int): UnsafeRow = {
     convertedRow.pointTo(buf, Unsafe.ARRAY_BYTE_BASE_OFFSET + offset, length)

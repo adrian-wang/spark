@@ -76,7 +76,7 @@ class JsonFPGAFileFormat extends JsonFileFormat {
 
     (file: PartitionedFile) => {
       val parser = new FPGAJsonParser(actualSchema, parsedOptions)
-      JsonFPGADataSource(parsedOptions).readFile(
+      JsonFPGADataSource(parsedOptions).readFile2(
         broadcastedHadoopConf.value.value,
         file,
         parser,
