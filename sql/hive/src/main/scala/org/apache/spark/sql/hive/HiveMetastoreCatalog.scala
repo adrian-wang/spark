@@ -286,7 +286,7 @@ private[hive] case class MetastoreRelation
     }
   )
 
-  val tableDesc = new TableDesc(
+  lazy val tableDesc = new TableDesc(
     Class.forName(
       hiveQlTable.getSerializationLib,
       true,
